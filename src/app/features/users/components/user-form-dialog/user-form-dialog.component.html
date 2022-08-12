@@ -1,0 +1,128 @@
+<h1 mat-dialog-title>Hi</h1>
+<div
+    mat-dialog-content
+    [formGroup]="userForm"
+>
+    <div class="row">
+        <mat-form-field appearance="standard">
+            <mat-label>First Name</mat-label>
+            <input
+                matInput
+                formControlName="firstName"
+            >
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Last Name</mat-label>
+            <input
+                matInput
+                formControlName="lastName"
+            >
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Email</mat-label>
+            <input
+                matInput
+                formControlName="email"
+            >
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field appearance="standard">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+                <mat-option value="male">
+                    Male
+                </mat-option>
+                <mat-option value="female">
+                    Female
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field appearance="standard">
+            <mat-label>Address</mat-label>
+            <input
+                matInput
+                formControlName="address"
+            >
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>PIN code</mat-label>
+            <input
+                matInput
+                formControlName="pinCode"
+            >
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Choose a date</mat-label>
+            <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="dateOfBirth"
+            >
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div
+        class="row"
+        formGroupName="country"
+    >
+        <mat-form-field appearance="standard">
+            <mat-label>Country</mat-label>
+            <mat-select
+                formControlName="_id"
+                (selectionChange)="onCountrySelected($event)"
+            >
+                <mat-option
+                    *ngFor="let country of countries"
+                    [value]="country._id"
+                >
+                    {{ country.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-container formGroupName="state">
+            <mat-form-field appearance="standard">
+                <mat-label>State</mat-label>
+                <mat-select
+                    formControlName="id"
+                    (selectionChange)="onStateSelected($event)"
+                >
+                    <mat-option
+                        *ngFor="let state of countryStates"
+                        [value]="state.id"
+                    >
+                        {{ state.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field
+                appearance="standard"
+                formGroupName="city"
+            >
+                <mat-label>State</mat-label>
+                <mat-select formControlName="id">
+                    <mat-option
+                        *ngFor="let city of stateCities"
+                        [value]="city.id"
+                    >
+                        {{ city.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button>No Thanks</button>
+    <button
+        mat-button
+        cdkFocusInitial
+    >Ok</button>
+</div>

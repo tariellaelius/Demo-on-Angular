@@ -5,10 +5,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter } from '@angular/material/core';
 
 
 @NgModule({
@@ -19,10 +23,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatCardModule,
     MatAutocompleteModule,
     MatTableModule,
     MatIconModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -34,6 +40,26 @@ import { MatIconModule } from '@angular/material/icon';
     MatAutocompleteModule,
     MatTableModule,
     MatIconModule,
+    MatDialogModule,
+  ],
+  providers: [
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: {
+          dateInput: 'YYYY-MM-DD',
+        },
+        display: {
+          dateInput: 'YYYY-MM-DD',
+          monthYearLabel: 'MMM YYYY',
+          dateA11yLabel: 'LL',
+          monthYearA11yLabel: 'MMMM YYYY',
+        },
+      },
+    },
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter
+    },
   ]
 })
 export class MaterialModule { }

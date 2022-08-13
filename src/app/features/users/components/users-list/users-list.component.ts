@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
@@ -15,6 +16,9 @@ export class UsersListComponent implements OnInit, OnChanges {
 
   @Input() users: User[] = [];
   @Output() userUpdate = new EventEmitter();
+
+  @ViewChild(MatSort) sort!: MatSort;
+  
   displayedColumns = [
     'firstName',
     'lastName',
@@ -38,6 +42,10 @@ export class UsersListComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void { }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnChanges(): void {
     this.dataSource.data = this.users;

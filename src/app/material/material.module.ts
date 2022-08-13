@@ -15,6 +15,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatDialogModule,
     MatSnackBarModule,
     MatSortModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatButtonModule,
@@ -47,6 +49,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatDialogModule,
     MatSnackBarModule,
     MatSortModule,
+    MatPaginatorModule,
   ],
   providers: [
     {

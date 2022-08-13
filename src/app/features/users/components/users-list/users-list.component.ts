@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 import { User } from '../../models/user.model';
@@ -18,7 +19,8 @@ export class UsersListComponent implements OnInit, OnChanges {
   @Output() userUpdate = new EventEmitter();
 
   @ViewChild(MatSort) sort!: MatSort;
-  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   displayedColumns = [
     'firstName',
     'lastName',
@@ -45,6 +47,7 @@ export class UsersListComponent implements OnInit, OnChanges {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnChanges(): void {

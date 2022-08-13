@@ -87,3 +87,5 @@
     <tr mat-row *matRowDef="let user; columns: displayedColumns;">
     </tr>
 </table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25]" aria-label="Select page of users"></mat-paginator>

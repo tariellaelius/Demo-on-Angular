@@ -23,4 +23,8 @@ export class UserService {
     return this.http.patch<User>(`${UserService.url}/users/${user._id}`, user);
   }
 
+  deleteUser(user: User) {
+    return this.http.delete(`${UserService.url}/users/${user._id}`);
+  }
+
 }

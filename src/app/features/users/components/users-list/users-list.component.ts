@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
 import { User } from '../../models/user.model';
+import { UserFormDialogComponent } from '../user-form-dialog/user-form-dialog.component';
 
 @Component({
   selector: 'app-users-list',
@@ -9,6 +12,7 @@ import { User } from '../../models/user.model';
 export class UsersListComponent implements OnInit {
 
   @Input() users: User[] = [];
+  @Output() userUpdate = new EventEmitter();
   displayedColumns = [
     'firstName',
     'lastName',
@@ -20,10 +24,21 @@ export class UsersListComponent implements OnInit {
     'city',
     'address',
     'pinCode',
+    'edit',
   ];
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void { }
+
+  openDialog(user: User) {
+    const dialogRef = this.dialog.open(UserFormDialogComponent, {
+      data: user,
+    });
+
+    dialogRef.afterClosed().subscribe(success => success && this.userUpdate.emit());
+  }
 
 }

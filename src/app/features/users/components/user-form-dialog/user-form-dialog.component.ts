@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Country } from '../../interfaces/country';
@@ -22,7 +21,7 @@ export class UserFormDialogComponent implements OnInit {
   userForm!: FormGroup;
 
   countries!: Partial<Country>[];
-  countryStates!: State[];
+  countryStates: State[] = [];
   stateCities!: City[];
 
   constructor(
@@ -37,6 +36,7 @@ export class UserFormDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.data ?? this.user;
     this.userForm = this.fb.group({
       ...this.user,
       country: this.fb.group({
@@ -50,23 +50,41 @@ export class UserFormDialogComponent implements OnInit {
       })
     });
 
-    this.countriesService.getCountries().subscribe(countries => this.countries = countries);
+    this.countriesService.getCountries().subscribe(countries => {
+      this.countries = countries;
+      this.setCountryStates();
+    });
   }
 
-  onCountrySelected(e: MatSelectChange) {
-    this.countriesService.getCountryById(e.value).subscribe(c => this.countryStates = c.states);
-    this.stateCities = [];
+  onCountrySelected() {
     this.userForm.get('country.state.id')?.setValue(null);
     this.userForm.get('country.state.city.id')?.setValue(null);
+    this.setCountryStates();
+    this.stateCities = [];
   }
 
-  onStateSelected(e: MatSelectChange) {
-    this.stateCities = this.countryStates.find(c => c.id === e.value)?.cities || [];
+  setCountryStates() {
+    const countryId = this.userForm.get('country._id')?.value;
+    if (!countryId) return;
+    this.countriesService.getCountryById(countryId).subscribe(c => {
+      this.countryStates = c.states;
+      this.setStateCities();
+    });
+  }
+
+  onStateSelected() {
     this.userForm.get('country.state.city.id')?.setValue(null);
+    this.setStateCities();
+  }
+
+  setStateCities() {
+    const stateId = this.userForm.get('country.state.id')?.value;
+    this.stateCities = this.countryStates.find(c => c.id === stateId)?.cities || [];
   }
 
   submit() {
-    this.userService.createUser(this.userForm.value).subscribe({
+    const method = this.data ? 'update' : 'create';
+    this.userService[`${method}User`](this.userForm.value).subscribe({
       next: () => {
         this.dialogRef.close(true);
       },

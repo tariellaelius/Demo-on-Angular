@@ -19,4 +19,8 @@ export class UserService {
     return this.http.post<User>(`${UserService.url}/users`, user);
   }
 
+  updateUser(user: User) {
+    return this.http.patch<User>(`${UserService.url}/users/${user._id}`, user);
+  }
+
 }

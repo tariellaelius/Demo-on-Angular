@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { DateAdapter } from '@angular/material/core';
     MatTableModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -41,6 +43,7 @@ import { DateAdapter } from '@angular/material/core';
     MatTableModule,
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   providers: [
     {

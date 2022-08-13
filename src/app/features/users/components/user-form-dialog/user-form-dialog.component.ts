@@ -1,13 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Country } from '../../interfaces/country';
 import { State } from '../../interfaces/state';
 import { City } from '../../interfaces/city';
 import { User } from '../../models/user.model';
 import { CountriesService } from '../../services/countries.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-form-dialog',
@@ -28,6 +30,8 @@ export class UserFormDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: User,
     private fb: FormBuilder,
     private countriesService: CountriesService,
+    private userService: UserService,
+    private _snackBar: MatSnackBar,
   ) {
     this.user = new User();
   }
@@ -45,7 +49,7 @@ export class UserFormDialogComponent implements OnInit {
         })
       })
     });
-    
+
     this.countriesService.getCountries().subscribe(countries => this.countries = countries);
   }
 
@@ -54,11 +58,21 @@ export class UserFormDialogComponent implements OnInit {
     this.stateCities = [];
     this.userForm.get('country.state.id')?.setValue(null);
     this.userForm.get('country.state.city.id')?.setValue(null);
-    console.log(this.userForm);
   }
 
   onStateSelected(e: MatSelectChange) {
     this.stateCities = this.countryStates.find(c => c.id === e.value)?.cities || [];
     this.userForm.get('country.state.city.id')?.setValue(null);
+  }
+
+  submit() {
+    this.userService.createUser(this.userForm.value).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this._snackBar.open(error?.error?.message?.join('; '), 'OK');
+      }
+    });
   }
 }

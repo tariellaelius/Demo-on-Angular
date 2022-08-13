@@ -51,6 +51,7 @@
             <mat-label>PIN code</mat-label>
             <input
                 matInput
+                type="number"
                 formControlName="pinCode"
             >
         </mat-form-field>
@@ -61,7 +62,6 @@
                 [matDatepicker]="picker"
                 formControlName="dateOfBirth"
             >
-            <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle
                 matSuffix
                 [for]="picker"
@@ -120,9 +120,10 @@
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button>No Thanks</button>
+    <button mat-button mat-dialog-close>Cancel</button>
     <button
         mat-button
         cdkFocusInitial
-    >Ok</button>
+        (click)="submit()"
+    >Submit</button>
 </div>

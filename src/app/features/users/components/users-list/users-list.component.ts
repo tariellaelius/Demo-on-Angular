@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-users-list',
@@ -9,7 +8,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UsersListComponent implements OnInit {
 
-  users: User[] = [];
+  @Input() users: User[] = [];
   displayedColumns = [
     'firstName',
     'lastName',
@@ -23,10 +22,8 @@ export class UsersListComponent implements OnInit {
     'pinCode',
   ];
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.userService.getUsers().subscribe(users => this.users = users);
-  }
+  ngOnInit(): void { }
 
 }

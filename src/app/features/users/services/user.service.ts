@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { map, catchError, tap, first } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -15,6 +13,10 @@ export class UserService {
 
   getUsers() {
     return this.http.get<User[]>(`${UserService.url}/users`);
+  }
+
+  createUser(user: User) {
+    return this.http.post<User>(`${UserService.url}/users`, user);
   }
 
 }

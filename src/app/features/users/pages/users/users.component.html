@@ -1,11 +1,16 @@
-<app-users-list [users]="users" (userUpdate)="getUsers()"></app-users-list>
-<div class="action-button">
-    <button
-        mat-fab
-        color="primary"
-        aria-label="Add new user"
-        (click)="openDialog()"
-    >
-        <mat-icon>add</mat-icon>
-    </button>
+<div class="page">
+    <app-users-list
+        [users]="users"
+        (userUpdate)="getUsers()"
+    ></app-users-list>
+    <div class="action-button">
+        <button
+            mat-fab
+            color="primary"
+            aria-label="Add new user"
+            (click)="openDialog()"
+        >
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
 </div>

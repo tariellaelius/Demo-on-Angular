@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
 import { Country } from '../interfaces/country';
 
 @Injectable({
@@ -10,8 +11,7 @@ import { Country } from '../interfaces/country';
 })
 export class CountriesService {
 
-  // TODO: get from env variable
-  static readonly url = 'http://localhost:3000';
+  static readonly url = environment.backendUrl;
 
   countries!: Country[];
 

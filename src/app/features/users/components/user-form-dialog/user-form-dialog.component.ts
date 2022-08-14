@@ -84,13 +84,17 @@ export class UserFormDialogComponent implements OnInit {
 
   submit() {
     const method = this.data ? 'update' : 'create';
-    this.userService[`${method}User`](this.userForm.value).subscribe({
-      next: () => {
-        this.dialogRef.close(true);
-      },
-      error: (error) => {
-        this._snackBar.open(error?.error?.message?.join('; '), 'OK');
-      }
+
+    if (!this.userForm.valid) {
+      this.userForm.markAllAsTouched();
+      this._snackBar.open('Please fill all required fields',
+        'OK', {
+          "duration": 3000
+      });
+      return;
+    }
+    this.userService[`${method}User`](this.userForm.value).subscribe(() => {
+      this.dialogRef.close(true);
     });
   }
 }

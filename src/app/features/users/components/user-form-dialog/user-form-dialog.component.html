@@ -8,6 +8,7 @@
             <input
                 matInput
                 formControlName="firstName"
+                required
             >
         </mat-form-field>
         <mat-form-field appearance="standard">
@@ -15,6 +16,7 @@
             <input
                 matInput
                 formControlName="lastName"
+                required
             >
         </mat-form-field>
         <mat-form-field appearance="standard">
@@ -22,13 +24,14 @@
             <input
                 matInput
                 formControlName="email"
+                required
             >
         </mat-form-field>
     </div>
     <div class="row">
         <mat-form-field appearance="standard">
             <mat-label>Gender</mat-label>
-            <mat-select formControlName="gender">
+            <mat-select formControlName="gender" required>
                 <mat-option value="male">
                     Male
                 </mat-option>
@@ -44,6 +47,7 @@
             <input
                 matInput
                 formControlName="address"
+                required
             >
         </mat-form-field>
         <mat-form-field appearance="standard">
@@ -52,6 +56,7 @@
                 matInput
                 type="number"
                 formControlName="pinCode"
+                required
             >
         </mat-form-field>
         <mat-form-field appearance="standard">
@@ -60,6 +65,7 @@
                 matInput
                 [matDatepicker]="picker"
                 formControlName="dateOfBirth"
+                required
             >
             <mat-datepicker-toggle
                 matSuffix
@@ -77,6 +83,7 @@
             <mat-select
                 formControlName="_id"
                 (selectionChange)="onCountrySelected()"
+                required
             >
                 <mat-option
                     *ngFor="let country of countries"
